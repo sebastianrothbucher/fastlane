@@ -1,0 +1,32 @@
+---
+title: "Repot"
+output: pdf_document
+params: 
+  num:
+    label: "Num"
+    value: 0
+---
+
+```{r echo=FALSE}
+# thx, https://r-graph-gallery.com/piechart-ggplot2.html
+
+# Load ggplot2
+library(ggplot2)
+
+# Create Data
+data <- data.frame(
+  group=LETTERS[1:5],
+  value=c(13,7,9,21,2)
+)
+
+# Basic piechart
+ggplot(data, aes(x="", y=value, fill=group)) +
+  geom_bar(stat="identity", width=1) +
+  coord_polar("y", start=0)
+```
+
+Passed in:
+
+```{r}
+params$num
+```

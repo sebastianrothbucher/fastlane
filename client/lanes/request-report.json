@@ -1,0 +1,43 @@
+{
+    "id": "65C4524D-C7D1-4D2B-B614-345990FE9DCE",
+    "title": "Request my report",
+    "questions": [
+        {
+            "id": "report_type",
+            "type": "select-dropdown",
+            "title": "What kind of report?",
+            "description": "Can have a full one or a short, compact one",
+            "options": [
+                {
+                    "id": "Compact"
+                },
+                {
+                    "id": "Full"
+                }
+            ]
+        },
+        {
+            "id": "customer_no",
+            "type": "text",
+            "title": "Customer #"
+        }
+    ],
+    "hasConfirm": false,
+    "access": "invite",
+    "maillimit": null,
+    "analytics": "none",
+    "google-analytics-id": null,
+    "endpoint": {
+        "type": "api",
+        "format": "markdown",
+        "endpoint": "/mocks/some-report.md",
+        "agentScript": null,
+        "authorization": "Bearer abc123",
+        "method": "get",
+        "script": null,
+        "lang": null
+    },
+    "processing": {
+        "type": "default"
+    }
+}

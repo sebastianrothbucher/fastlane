@@ -1,0 +1,116 @@
+lanes:
+  generate-my-report: 
+    title: Generate my report
+    questions: 
+      - id: report_type
+        type: select-dropdown
+        title: What kind of report?
+        description: Can have a full one or a short, compact one
+        options:
+          - id: Compact
+          - id: Full
+      - id: customer_no
+        type: text
+        title: Customer \#
+    #hasConfirm: false # (later: implement confirm step w/ accept terms)
+    #access: invite (later: different access modes)
+    #analytics: none (later: add analytics - e.g. GA)
+    endpoint:
+      type: api
+      format: markdown
+      method: get
+      endpoint: http://localhost:8080/mocks/some-report.md
+      #lambda: (later: possibility to call Lambda directly)
+      #agentScript: (later: possibility to have an executor agent)
+      authorization: Bearer 123
+    processing:
+      type: default
+      #template: (later: allow HTML/MD templates to format e.g. JSON responses)
+      #templateFormat: (later: see prev)
+    permissions:
+      - sebastianrothbucher@googlemail.com
+      - sebastianrothbucher+NiFi@googlemail.com
+  request-express-change: 
+    title: Request express change
+    questions: 
+      - id: ident_type
+        type: select-dropdown
+        title: How to delete?
+        options:
+          - id: id
+            title: By ID
+          - id: tag
+            title: "By Tag"
+      - id: id_tag
+        type: text
+        title: ID/Tag
+        description: Give the ID or tag to remove
+    #hasConfirm: false # (later: implement confirm step w/ accept terms)
+    #access: invite (later: different access modes)
+    #analytics: none (later: add analytics - e.g. GA)
+    endpoint:
+      type: api
+      format: markdown
+      method: get
+      endpoint: http://localhost:8080/mocks/remove-success.md
+      #lambda: (later: possibility to call Lambda directly)
+      #agentScript: (later: possibility to have an executor agent)
+      authorization: Bearer 123
+    processing:
+      type: default
+      #template: (later: allow HTML/MD templates to format e.g. JSON responses)
+      #templateFormat: (later: see prev)
+    permissions:
+      - sebastianrothbucher@googlemail.com
+  reserve-my-timeslot:
+    title: Reserve my timeslot
+    questions: 
+      - id: about
+        type: select-dropdown
+        title: What can we help you with?
+        options:
+          - id: Fastlane solutions
+          - id: NiFi consulting
+      - id: details
+        type: text-multiline
+        title: Details
+        description: Feel free to share some more details
+      - id: time
+        type: select-dropdown
+        title: Select a time
+        limited: my-timeslots  # here: use all available options
+    #hasConfirm: false # (later: implement confirm step w/ accept terms)
+    #access: invite (later: different access modes)
+    #analytics: none (later: add analytics - e.g. GA)
+    endpoint:
+      type: api
+      format: html
+      method: get
+      endpoint: http://localhost:8080/mocks/reserve-timeslot.html
+      #lambda: (later: possibility to call Lambda directly)
+      #agentScript: (later: possibility to have an executor agent)
+      authorization: Bearer 123
+    processing:
+      type: default
+      #template: (later: allow HTML/MD templates to format e.g. JSON responses)
+      #templateFormat: (later: see prev)
+    permissions:
+      - sebastianrothbucher@googlemail.com
+limited-resources:
+  my-timeslots:
+    - id: jan22_14_00
+      title: Jan 22, 14:00
+      count: 3
+    - id: jan23_14_00
+      title: Jan 23, 14:00
+      count: 2
+users: # generate hashes by e.g. salt = require('crypto').randomBytes(16).toString('hex'); salt + '$' + require('crypto').createHash('sha256').update(salt + '$' + '<password>').digest('hex')
+  - user: sebastianrothbucher@googlemail.com
+    passwordHash: 09ae9d46385a12d7b0c1852bc6a4fb9b$1dc41ed2ddb274e3b7b4e8981a386ad8e326a87252a87a2bd48f64f2e0e502bc # topsecret
+admins: 
+  - sebastianrothbucher@googlemail.com
+  - sebastianrothbucher+NiFi@googlemail.com
+apiKeys:  # e.g. require('crypto').randomBytes(48).toString('base64') gives a 64 char Key
+  - key: M9aHScjTfUTmYpBG3onrEZqUKN7SYdlNOBYwrN4DSyJWejmZnD6WOfFajo2Yyhhl
+    user: sebastianrothbucher+NiFi@googlemail.com
+baseUrl: http://localhost:8090

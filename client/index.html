@@ -1,0 +1,50 @@
+<html>
+    <head>
+    </head>
+    <body>
+        <div id="app">
+            <span class="app-logo-bar alink" style="color: black; " @click="closeLane"><span class="app-logo">⏩</span> Fastlane front desk</span>
+            <small class="logout-button alink">Logout</small>
+            <div class="lanes" v-if="!lane">
+                <div v-for="(lane, i) in lanes" :key="i"><button class="matter-button-outlined big-button" @click="loadLane(lane)">{{lane.title}}</button><small v-if="lane.description"><br />{{lane.description}}</small></div>
+                <div><button class="matter-button-text big-button with-callout">View submitted requests<span class="callout">2</span></button></div>
+            </div>
+            <div class="questions" v-else-if="'q' === phase">
+                <questions></questions>
+            </div>
+            <div class="preflight" v-else-if="'pf' === phase">
+                <div>Here's your answers - OK to submit?</div>
+                <ul>
+                    <li v-for="(q, i) in questions" :key="i">{{q.title || q.var || ''}}: {{formatAnswer(q, question_answers[i])}}</li>
+                </ul>
+                <div><button class="next-question matter-button-contained" @click="submitPreflight">Submit</button></div>
+            </div>
+            <div class="processing" v-else-if="'p' === phase">
+                Processing...
+            </div>
+            <div class="answer" v-else-if="'a' === phase">
+                <answer></answer>
+            </div>
+        </div>
+         <!-- dependencies for both offline and online (whoever wins)-->
+         <link rel="stylesheet" type="text/css" href="lib/matter.css"/>
+         <!--link rel="stylesheet" type="text/css" href="https://res.cloudinary.com/finnhvman/raw/upload/matter/matter-0.2.2.css"/-->
+         <link rel="stylesheet" type="text/css" href="index.css"/>
+         <script src="lib/lodash.js"></script>
+         <!--script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.js"></script-->
+         <script src="node_modules/vue/dist/vue.js"></script>
+         <!--script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script-->
+         <script src="node_modules/http-vue-loader/src/httpVueLoader.js"></script>
+         <!--script src="https://unpkg.com/http-vue-loader@1.4.1/src/httpVueLoader.js"></script-->
+         <script src="node_modules/vuex/dist/vuex.js"></script>
+         <!--script src="https://unpkg.com/vuex@3.1.2/dist/vuex.js"></script-->
+         <script src="node_modules/vuex-persist/dist/umd/index.js"></script>
+         <!--script src="https://unpkg.com/vuex-persist@2.1.1/dist/umd/index.js"></script-->
+         <script src="node_modules/showdown/dist/showdown.js"></script>
+         <!--script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.1/showdown.js"></script-->
+         <script src="actions.js"></script>
+         <script src="mutations.js"></script>
+         <script src="index.js"></script>
+     </body>
+    </body>
+</html>

@@ -1,0 +1,162 @@
+/* WE CAN THEME THIS THING! */
+:root {
+    /* --matter-theme-rgb: 255 105 180; hotpink */
+    --matter-theme-rgb: 0 0 139; /* darkblue */
+}
+
+
+#app {
+    font-family: sans-serif;
+    position: relative;
+}
+
+.app-logo {
+    display: inline-block;
+    font-size: 30px;
+    vertical-align: -5px;
+    margin-right: 5px;
+}
+
+.matter-button-outlined.big-button, .matter-button-text.big-button {
+    font-size: 18px;
+    padding: 10px 26px;
+    height: 56px;
+}
+
+.with-callout {
+    position: relative;
+}
+.callout {
+    display: block;
+    height: 25px;
+    width: 25px;
+    background-color: darkred;
+    color: white;
+    border-radius: 13px;
+    font-size: 12px;
+    line-height: 25px;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+}
+
+.lanes, .questions, .preflight, .processing {
+    position: absolute;
+    top: 45vh;
+    left: 50vw;
+    transform: translate(-50%, -50%); /* centered */
+}
+.lanes {
+    text-align: center;
+}
+.lanes button {
+    margin-bottom: 16px; 
+    min-width: 30vw;
+}
+
+.questions, .preflight {
+    width: 400px;
+    max-width: 100%;
+}
+.questions .select-question > div:first-child {
+    margin-bottom: 10px;
+}
+.questions .matter-textfield-filled, 
+.questions .matter-textfield-filled input {
+    width: 100%;
+}
+.questions .matter-radio {
+    margin-right: 20px;
+}
+.questions .next-question, .preflight .next-question {
+    float: right;
+    margin-top: 16px;
+}
+.preflight ul{
+    display: contents;
+} 
+.preflight li {
+    display: block;
+    margin: 10px 0;
+    text-decoration: underline;
+}
+.answer {
+    position: absolute;
+    top: 20vh;
+    left: 20vw;
+    right: 20vw;
+    max-height: 60vh;
+    overflow-y: auto;
+    background: #f0f0f0;
+    padding: 20px;    
+}
+
+.admin-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+.admin {
+    position: fixed;
+    top: 0;
+    height: 100vh;
+    max-height: 100vh;
+    overflow-y: auto;
+    right: 0;
+    width: 350px;
+    max-width: 100%;
+    padding: 10px;
+    background-color: white;
+    border-left: 1px solid grey;
+    transform: translateX(420px); /* out of sight */
+    transition: transform 0.5s;
+    z-index: 10;
+}
+.admin.admin-show {
+    transform: translateX(0);
+}
+.admin h2 {
+    font-size: 18px;
+}
+.admin-close {
+    float: right; 
+    min-width: 30px;
+    margin-top: -10px;
+}
+.admin .question-settings {
+    margin: 30px 0;
+}
+.admin .question-q {
+    margin-bottom: 8px;
+}
+.admin .question-q, 
+.admin .question-q input {
+    width: 100%;
+}
+.admin .question-type.matter-radio {
+    margin-right: 20px;
+}
+.admin .question-options {
+    margin-top: 8px;
+}
+.admin .question-options, 
+.admin .question-options input {
+    width: 100%;
+}
+
+.fileres {
+    min-width: 75vw;
+    min-height: 75vh;
+}
+
+.logout-button {
+    position: fixed;
+    display: block;
+    bottom: 10px;
+    left: 10px;
+}
+
+.alink {
+    cursor: pointer;
+    color: rgb(var(--matter-theme-rgb));
+}

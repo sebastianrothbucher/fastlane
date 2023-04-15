@@ -36,6 +36,11 @@ describe('submitLane', () => {
         };
         dao.getLane.mockReturnValue({
             id: 'lane123',
+            questions: [
+                {
+                    id: 'saywhat',
+                },
+            ],
             endpoint: {
                 type: 'api',
                 endpoint: 'https://bla',
@@ -124,7 +129,7 @@ describe('submitLane', () => {
         expect(dao.saveLane.mock.calls[2][0].submittedAt).toBeDefined();
         expect(dao.saveLane.mock.calls[2][0].submittedBy).toBe('test@bla.com');
         expect(fetchMock.mock.calls.length).toBe(1);
-        expect(fetchMock.mock.calls[0][0]).toBe('https://bla');
+        expect(fetchMock.mock.calls[0][0]).toBe('https://bla?saywhat=hey&_user=test%40bla.com');
         expect(dao.saveLane.mock.calls[2][0].endpoint_answer).toBe('API-Res');
         expect(dao.saveLane.mock.calls[2][0].processed_answer).toBe('test-processed');
         expect(res.status.mock.calls[0][0]).toBe(201);

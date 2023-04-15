@@ -82,6 +82,16 @@ const app = new Vue({
         }
     },
     async mounted() {
+        // check if we're logged in and redirect if not
+        const meCallRes = await fetch('/api/me');
+        if (401 === meCallRes.status) {
+            location.href="/login.html";
+            return;
+        } else if ((meCallRes.status - (meCallRes.status % 100)) !== 200) {
+            alert('Error ' + meCallRes.status);
+            return;
+        }
+        // (now pull data for initial screen)
         try {
             //this.$store.state.lanes = await fetch('/lanes/index.json').then(res => res.json()); // shortcut, I know ;-)
             this.$store.state.lanes = (await fetch('/api/defs').then(res => res.json())).lanes; // shortcut, I know ;-)

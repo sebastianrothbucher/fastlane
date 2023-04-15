@@ -21,6 +21,7 @@ describe('actions', () => {
         context = {
             state: {
                 lane: {
+                    id: '12345',
                     phase: 'q',
                     questions: [
                         {id: 'q1'},
@@ -58,7 +59,25 @@ describe('actions', () => {
         expect(context.state.lane.phase).toBe('pf');
     });
 
-    it('fetches from API as text', async () => {
+    it('fetches from backend', async () => {
+        global.fetch.mockReturnValue(Promise.resolve({
+            json: () => Promise.resolve({lane: {
+                endpoint_answer: 'some ep answer',
+                processed_answer: 'some processed answer',
+            }}),
+        }));
+        await actions.startProcess(context);
+        expect(context.commit.mock.calls[0][0]).toBe('START_PROCESS');
+        expect(global.fetch.mock.calls.length).toBe(1);
+        expect(global.fetch.mock.calls[0][0]).toBe('/api/submit/12345');
+        expect(global.fetch.mock.calls[0][1]?.body).toBeDefined();
+        expect(context.commit.mock.calls[1][0]).toBe('SET_RAW_ANSWER');
+        expect(context.commit.mock.calls[1][1]?.answer).toBe('some ep answer');
+        expect(context.commit.mock.calls[2][0]).toBe('SET_PROCESSED_ANSWER');
+        expect(context.commit.mock.calls[2][1]?.answer).toBe('some processed answer');
+    });
+
+    /*it('fetches from API as text', async () => {
         context.state.lane.endpoint.format = 'text';
         global.fetch.mockReturnValue(Promise.resolve({
             text: () => Promise.resolve('hey')
@@ -85,7 +104,6 @@ describe('actions', () => {
         expect(context.dispatch.mock.calls.length).toBe(1);
         expect(context.dispatch.mock.calls[0][0]).toBe('processAnswer');
     });
-    // TODO: params / body / auth; error handling
 
     it('formats HTML verbatim', () => {
         context.state.lane.endpoint.format = 'html';
@@ -114,7 +132,6 @@ describe('actions', () => {
         actions.processAnswer(context);
         expect(context.commit.mock.calls[0][0]).toBe('SET_PROCESSED_ANSWER');
         expect(context.commit.mock.calls[0][1]?.answer).toMatch(/<h2.*>bla<\/h2>/);
-    });
-    // TODO: template processing
+    });*/
 
 });

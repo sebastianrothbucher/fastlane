@@ -60,7 +60,13 @@ module.exports = async function(req, res, dao, repo) { // save answers, call end
     if ('noop' === lane.endpoint.type) {
         await new Promise(resolve => setTimeout(resolve, 2000));
     } else if ('api' === lane.endpoint.type) {
-        const resInit = await fetch(lane.endpoint.endpoint); // TODO: params / body incl. user_data / auth; error handling
+        let fullEndpoint = lane.endpoint.endpoint;
+        const params = (lane.questions || []).map((q, i) => encodeURIComponent(q.id) + '=' + encodeURIComponent(lane.question_answers[i])).join('&');
+        if (params.length > 0) {
+            fullEndpoint += ((fullEndpoint.indexOf('?') >= 0 ? '&' : '?') + params);
+        }
+        fullEndpoint += ((fullEndpoint.indexOf('?') >= 0 ? '&' : '?') + '_user=' + encodeURIComponent(req.user));
+        const resInit = await fetch(fullEndpoint); // TODO: body for post incl. _user, auth, error handling
         if ('json' === lane.endpoint.format) {
             const res = await resInit.json();
             lane.endpoint_answer = res;

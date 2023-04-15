@@ -14,6 +14,7 @@ let _baseUrl = null;
 function readIfNeeded() {
     const now = Date.now();
     if ((now - REREAD) > lastRead) {
+        console.log('(re)reading repo yaml');
         const cnt = yaml.parse(fs.readFileSync('../fastlane.yml', 'utf-8'));
         _laneDefs = cnt['lanes'];
         _limitedRes = cnt['limited-resources'];

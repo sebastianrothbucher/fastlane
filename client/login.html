@@ -1,0 +1,32 @@
+<html>
+    <head>
+    </head>
+    <body>
+        <div>
+            <span class="app-logo-bar" style="color: black; "><span class="app-logo">⏩</span> Fastlane front desk</span>
+            <div class="login">
+                <form action="/login.do" method="post">
+                    <div>
+                        <label class="matter-textfield-filled">
+                            <input name="username" placeholder=" " autocomplete="username" required/>
+                            <span>email</span>
+                        </label>
+                    </div>
+                    <div>
+                        <label class="matter-textfield-filled">
+                            <input name="password" placeholder=" " type="password" autocomplete="current-password" required/>
+                            <span>password</span>
+                        </label>
+                    </div>
+                    <div>
+                        <button class="matter-button-contained" type="submit">Log in</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- dependencies for both offline and online (whoever wins)-->
+        <link rel="stylesheet" type="text/css" href="lib/matter.css"/>
+        <!--link rel="stylesheet" type="text/css" href="https://res.cloudinary.com/finnhvman/raw/upload/matter/matter-0.2.2.css"/-->
+        <link rel="stylesheet" type="text/css" href="index.css"/>
+    </body>
+</html>

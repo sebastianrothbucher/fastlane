@@ -96,6 +96,23 @@ lanes:
       #templateFormat: (later: see prev)
     permissions:
       - sebastianrothbucher@googlemail.com
+  jupyter-test: # first full integration test
+    title: Jupyter-test
+    questions: 
+      - id: upper
+        type: text
+        title: How far up should we go?
+        description: (we'll count up to the number you give)
+    endpoint:
+      type: api
+      format: html
+      method: get
+      endpoint: http://localhost:5000/?code=topsecret123
+      #authorization: 
+    processing:
+      type: default
+    permissions:
+      - sebastianrothbucher@googlemail.com
 limited-resources:
   my-timeslots:
     - id: jan22_14_00

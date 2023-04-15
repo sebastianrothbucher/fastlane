@@ -8,7 +8,10 @@ const actions = { // (using mutations at some points - though little shame in do
     },
     async startProcess(context) {
         context.commit('START_PROCESS');
-        if ('noop' === context.state.lane.endpoint.type) {
+        const backendRes = await fetch('/api/submit/' + context.state.lane.id, {method: 'POST', body: JSON.stringify(context.state.lane), headers: {'Content-type': 'application/json'}}).then(res => res.json());
+        context.commit('SET_RAW_ANSWER', {answer: backendRes.lane.endpoint_answer});
+        context.commit('SET_PROCESSED_ANSWER', {answer: backendRes.lane.processed_answer});
+        /*if ('noop' === context.state.lane.endpoint.type) {
             await new Promise(resolve => setTimeout(resolve, 2000));
             context.dispatch('processAnswer');
         } else if ('api' === context.state.lane.endpoint.type) {
@@ -16,9 +19,9 @@ const actions = { // (using mutations at some points - though little shame in do
                 .then(res => res['json' === context.state.lane.endpoint.format ? 'json' : 'file' === context.state.lane.endpoint.format ? 'blob' : 'text']());
             context.commit('SET_RAW_ANSWER', {answer: res});
             context.dispatch('processAnswer');
-        } // TODO: more invocation types
+        } // TODO: more invocation types*/
     },
-    processAnswer(context) {
+    /*processAnswer(context) {
         if ('file' === context.state.lane.endpoint.format) {
             context.commit('SET_PROCESSED_ANSWER', {answer: '<iframe class="fileres" src="' + URL.createObjectURL(context.state.lane.endpoint_answer) + '"></iframe>'});
         } else if ((!context.state.lane.processing.type) || 'none' === context.state.lane.processing.type || 'default' === context.state.lane.processing.type) { // (that's simple)
@@ -39,7 +42,7 @@ const actions = { // (using mutations at some points - though little shame in do
             const conv = new showdown.Converter();
             context.commit('SET_PROCESSED_ANSWER', {answer: conv.makeHtml(templateFilled)});
         } // TODO: other processing/templating types
-    },
+    },*/
 };
 
 if (typeof(module) !== 'undefined') { // easy testing

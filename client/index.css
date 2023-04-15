@@ -40,7 +40,7 @@
     right: -5px;
 }
 
-.lanes, .questions, .preflight, .processing {
+.lanes, .login, .questions, .preflight, .processing {
     position: absolute;
     top: 45vh;
     left: 50vw;
@@ -54,13 +54,15 @@
     min-width: 30vw;
 }
 
-.questions, .preflight {
+.login, .questions, .preflight {
     width: 400px;
     max-width: 100%;
 }
 .questions .select-question > div:first-child {
     margin-bottom: 10px;
 }
+.login .matter-textfield-filled, 
+.login .matter-textfield-filled input,
 .questions .matter-textfield-filled, 
 .questions .matter-textfield-filled input {
     width: 100%;
@@ -68,7 +70,7 @@
 .questions .matter-radio {
     margin-right: 20px;
 }
-.questions .next-question, .preflight .next-question {
+.login button, .questions .next-question, .preflight .next-question {
     float: right;
     margin-top: 16px;
 }
@@ -89,6 +91,10 @@
     overflow-y: auto;
     background: #f0f0f0;
     padding: 20px;    
+}
+.answer .full-iframe {
+    width: 100% !important;
+    height: calc(60vh - 45px) !important;
 }
 
 .admin-button {

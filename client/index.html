@@ -4,7 +4,7 @@
     <body>
         <div id="app">
             <span class="app-logo-bar alink" style="color: black; " @click="closeLane"><span class="app-logo">⏩</span> Fastlane front desk</span>
-            <small class="logout-button alink">Logout</small>
+            <small class="logout-button alink" onclick="document.forms.logoutForm.submit()">Logout</small><form id="logoutForm" action="/logout.do" method="post"></form>
             <div class="lanes" v-if="!lane">
                 <div v-for="(lane, i) in lanes" :key="i"><button class="matter-button-outlined big-button" @click="loadLane(lane)">{{lane.title}}</button><small v-if="lane.description"><br />{{lane.description}}</small></div>
                 <div><button class="matter-button-text big-button with-callout">View submitted requests<span class="callout">2</span></button></div>

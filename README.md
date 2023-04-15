@@ -21,6 +21,7 @@ Initial examples included:
 - Reserving a timeslot
 - Requesting a custom report
 - Requesting an express change
+- a full Jupyter report generation
 
 could also be a lot more, like
 
@@ -42,6 +43,13 @@ So, instead of creating a full app for this, all that's needed is
 2. a definition in `fastlane.yml`
 
 and y're good to go.
+
+### Steps to get going
+
+1. (as admin) Define lanes and users in fastlane.yml (it auto-updates after max 30s) <br/><img src="utils/screens/screen1.png" width="528" />
+2. (as user) Log in and choose a lane <br/><img src="utils/screens/screen2.png" width="567" />
+3. Answer the questions <br/><img src="utils/screens/screen3.png" width="606" />
+4. Submit and get immediate feedback from the configured backend <br/><img src="utils/screens/screen4.png" width="656" />
 
 ### Freestyle services
 

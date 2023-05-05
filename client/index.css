@@ -166,3 +166,12 @@
     cursor: pointer;
     color: rgb(var(--matter-theme-rgb));
 }
+
+dialog.exist-lanes .dlg-close {
+    float: right; 
+    padding: 8px;
+}
+dialog.exist-lanes table th,
+dialog.exist-lanes table td {
+    padding:  2px 8px;
+}

@@ -18,6 +18,7 @@ const app = new Vue({
     el: '#app',
     store,
     data: () => ({
+        existLanes: [],
     }),
     computed: {
         lanes() {
@@ -55,6 +56,25 @@ const app = new Vue({
                 endpoint_answer: null,
                 processed_answer: null,
             };
+        },
+        async openLanesDialog() {
+            this.existLanes = (await fetch('/api/userlanes').then(res => res.json())).lanes; 
+            this.$refs.dlg.showModal();
+        },
+        async openExistLane(laneId) {
+            const laneFull = (await fetch('/api/lane/' + encodeURIComponent(laneId)).then(res => res.json())).lane; 
+            if ('q' === laneFull.phase) {
+                await Promise.all((laneFull.questions || []).filter(q => !!q.limited).map(async q => { // check limited resources (if we give optons here, give the intersection)
+                    const limitedOptions = await fetch('/limited/' + q.limited).then(res => res.json());
+                    const availableOptions = limitedOptions.filter(lo => (!q.options) || (!!q.options.find(o => o.id === lo.id)));
+                    q.options = availableOptions;
+                }));
+            }
+            this.$store.state.lane = laneFull;
+            this.$refs.dlg.close();
+        },
+        closeLanesDialog() {
+            this.$refs.dlg.close();
         },
         formatAnswer(q, answer) {
             if (!answer) {

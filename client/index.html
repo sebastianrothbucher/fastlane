@@ -7,7 +7,7 @@
             <small class="logout-button alink" onclick="document.forms.logoutForm.submit()">Logout</small><form id="logoutForm" action="/logout.do" method="post"></form>
             <div class="lanes" v-if="!lane">
                 <div v-for="(lane, i) in lanes" :key="i"><button class="matter-button-outlined big-button" @click="loadLane(lane)">{{lane.title}}</button><small v-if="lane.description"><br />{{lane.description}}</small></div>
-                <div><button class="matter-button-text big-button with-callout">View submitted requests<span class="callout">2</span></button></div>
+                <div><button class="matter-button-text big-button with-callout" @click="openLanesDialog()">View submitted requests<span class="callout">2</span></button></div>
             </div>
             <div class="questions" v-else-if="'q' === phase">
                 <questions></questions>
@@ -25,6 +25,28 @@
             <div class="answer" v-else-if="'a' === phase">
                 <answer></answer>
             </div>
+            <dialog ref="dlg" class="exist-lanes">
+                <span class="dlg-close"><a class="alink" @click="closeLanesDialog()">X</a></span>
+                <h3>Submitted requests / inbox</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Lane</th>
+                            <th>Status</th>
+                            <th>Last open</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(l, i) in existLanes" :key="i">
+                            <td>{{l.title || l.typeName || l.id}}</td>
+                            <td>{{'q' === l.phase ? 'open' : 'complete'}}</td>
+                            <td>{{l.updatedAt?.substring(0, 10)}}</td>
+                            <td><a class="alink" @click="openExistLane(l.id)">open</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </dialog>
         </div>
          <!-- dependencies for both offline and online (whoever wins)-->
          <link rel="stylesheet" type="text/css" href="lib/matter.css"/>

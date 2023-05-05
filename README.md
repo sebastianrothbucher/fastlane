@@ -51,6 +51,9 @@ and y're good to go.
 3. Answer the questions <br/><img src="utils/screens/screen3.png" width="606" />
 4. Submit and get immediate feedback from the configured backend <br/><img src="utils/screens/screen4.png" width="656" />
 
+New lanes can also be submitted via API, so you can request feedback. Users get an inbox of all open request (+ a list of completed): <br/>
+<img src="utils/screens/screen5.png" width="582" />
+
 ### Freestyle services
 
 Pro-actively engage one or two people

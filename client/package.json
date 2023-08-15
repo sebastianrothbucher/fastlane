@@ -4,8 +4,10 @@
   "scripts": {
     "postinstall": "mkdir -p lib/ && curl 'https://github.com/finnhvman/matter/releases/download/0.2.2/matter.css' -L -o lib/matter.css && curl 'https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.js' -o lib/lodash.js",
     "start": "http-server -c 0 -a 127.0.0.1 .",
+    "storybook": "storybook dev -p 6006",
     "test": "jest",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "http-vue-loader": "^1.4.1",
@@ -15,8 +17,19 @@
     "vuex-persist": "^2.1.1"
   },
   "devDependencies": {
+    "@storybook/addon-essentials": "^7.3.0",
+    "@storybook/addon-interactions": "^7.3.0",
+    "@storybook/addon-links": "^7.3.0",
+    "@storybook/blocks": "^7.3.0",
+    "@storybook/testing-library": "^0.2.0",
+    "@storybook/vue": "^7.3.0",
+    "@storybook/vue-vite": "^7.3.0",
+    "@vitejs/plugin-vue2": "^2.2.0",
+    "http-server": "^0.11.1",
     "jest": "^24.7.1",
-    "http-server": "^0.11.1"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "storybook": "^7.3.0"
   },
   "license": "MIT"
 }

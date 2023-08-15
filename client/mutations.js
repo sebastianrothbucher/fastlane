@@ -1,6 +1,9 @@
 const mutations = {
     NEXT_ANSWER(state, {answer, i}) {
         if (typeof(i) === 'number') {
+            if (!state.lane.question_answers) {
+                state.lane.question_answers = [];
+            }
             while ((state.lane.question_answers.length - 1) < i) {
                 state.lane.question_answers.push(null);
             }

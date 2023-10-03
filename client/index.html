@@ -10,6 +10,8 @@
                 <div><button class="matter-button-text big-button with-callout" @click="openLanesDialog()">View submitted requests<span class="callout">2</span></button></div>
             </div>
             <div class="questions" v-else-if="'q' === phase">
+                <h2>{{lane.title}}</h2>
+                <p v-if="lane.briefing">{{lane.briefing}}</p>
                 <questions></questions>
             </div>
             <div class="preflight" v-else-if="'pf' === phase">
@@ -23,6 +25,7 @@
                 Processing...
             </div>
             <div class="answer" v-else-if="'a' === phase">
+                <h2>{{lane.title}}</h2>
                 <answer></answer>
             </div>
             <dialog ref="dlg" class="exist-lanes">

@@ -1,6 +1,7 @@
 lanes:
   generate-my-report: 
     title: Generate my report
+    briefing: We'll generate an individual report on project x
     questions: 
       - id: report_type
         type: select-dropdown

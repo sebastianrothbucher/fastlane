@@ -24,6 +24,7 @@ module.exports = async function(req, res, dao, repo) {  // excluding endpoints a
             id: lane.id,
             version: lane.version,
             title: lane.title,
+            briefing: lane.briefing,
             phase: lane.phase,
             description: lane.description,
             questions: lane.questions,

@@ -89,6 +89,42 @@ const dao = { // max-simple DAO, atomic ops all around (make async to be prepped
             return null;
         }
     },
+
+    async createLanding(landing) {
+        if (!landing) {
+            throw new Error('landing is required');
+        }
+        if (!(Array.isArray(landing.permissions) && (landing.permissions.length > 0))) {
+            throw new Error('Landing needs permissions');
+        }
+        landing.id = uuidV4();
+        landing.version = 1;
+        const now = new Date().toISOString();
+        landing.createdAt = now;
+        landing.updatedAt = now;
+        const insertInfo = db.prepare('insert into landings (id, content, version, createdAt, updatedAt) values (?, ?, ?, ?, ?)')
+            .run(landing.id, JSON.stringify(landing), landing.version, now, now);
+        if (insertInfo.changes !== 1) {
+            throw new Error('Inserting landing failed');
+        }
+        return landing;
+    },
+    async getLandings(permittedEmail) {
+        if (!permittedEmail) {
+            throw new Error('Need an account to search permissions');
+        }
+        const landingsRaw = db.prepare('select content from landings where content like ? order by updatedAt desc')
+            .all('%' + permittedEmail + '%');
+        const landings = landingsRaw.map(lr => JSON.parse(lr.content))
+            .filter(l => (l.permissions || []).includes(permittedEmail)); // (don't fall for fragments or sth)
+        return landings;
+    },
+    async getAllLandings() {
+        const landingsRaw = db.prepare('select content from landings where 1=1 order by updatedAt desc').all();
+        const landings = landingsRaw.map(lr => JSON.parse(lr.content));
+        return landings;
+    },
+
     async logLimitedUse(laneId, resId, resOptionId, count) {
         if (!laneId) {
             throw new Error('laneId is required');

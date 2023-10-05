@@ -114,6 +114,27 @@ lanes:
       type: default
     permissions:
       - sebastianrothbucher@googlemail.com
+landings: 
+  tm200sro:
+    template: topmixer200
+    links:
+      - link: http://localhost:8080/mocks/gettingstarted-sro.pdf
+        title: Your personal getting started guide
+    permissions:
+      - sebastianrothbucher@googlemail.com
+landing-templates:
+  topmixer200:
+    title: Topmixer 200
+    briefing: We've put together some more info below
+    links: 
+      - link: http://localhost:8080/mocks/gettingstarted.pdf
+        title: Getting started
+      - link: http://localhost:8080/mocks/manual.pdf
+        title: Manual
+      - link: http://localhost:8080/mocks/topmixer200-accessories.html
+        title: Accessories
+      - lane: reserve-my-timeslot
+        title: Book onboarding session
 limited-resources:
   my-timeslots:
     - id: jan22_14_00

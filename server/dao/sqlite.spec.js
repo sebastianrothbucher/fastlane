@@ -152,6 +152,68 @@ describe('sqlite-dao', () => {
         expect(lane).toBeNull();
     });
 
+    it('creates a landing', async () => {
+        const createdLanding = await dao.createLanding({
+            someAttr: true,
+            permissions: ['test@bla.com'],
+        });
+        const landingCount = db.prepare('select count(*) as cnt from landings').get().cnt;
+        expect(landingCount).toBe(1);
+        const thisLanding = db.prepare('select * from landings').get();
+        expect(thisLanding.id).toBeDefined();
+        expect(thisLanding.id.length).toBe(36); // uuidv4
+        expect(thisLanding.version).toBe(1);
+        expect(thisLanding.content).toBeDefined();
+        const thisLandingParsed = JSON.parse(thisLanding.content);
+        expect(thisLandingParsed.id).toBe(thisLanding.id);
+        expect(thisLandingParsed.version).toBe(1);
+        expect(thisLandingParsed.createdAt).toBeDefined();
+        expect(thisLandingParsed.updatedAt).toBeDefined();
+        expect(thisLandingParsed.someAttr).toBe(true);
+        expect(createdLanding).toBeDefined();
+        expect(createdLanding.id).toBe(thisLanding.id);
+        expect(createdLanding.version).toBe(1);
+        expect(createdLanding.createdAt).toBeDefined();
+        expect(createdLanding.updatedAt).toBeDefined();
+        expect(createdLanding.someAttr).toBe(true);
+    });
+
+    it('gets landings by email deserialized', async () => {
+        await dao.createLanding({
+            someAttr: 'L1',
+            permissions: ['test@bla.com'],
+        });
+        await dao.createLanding({
+            someAttr: 'L2',
+            permissions: ['othertest@bla.com'],
+        });
+        await dao.createLanding({
+            someAttr: 'L3',
+            permissions: ['other@bla.com'],
+        });
+        const landings = await dao.getLandings('test@bla.com');
+        expect(landings.length).toBe(1);
+        expect(landings[0].someAttr).toBe('L1');
+    });
+    it('needs email to get landings', async () => {
+        expect(dao.getLandings(null)).rejects.toThrow();
+    });
+
+    it('gets all landings deserialized', async () => {
+        await dao.createLanding({
+            someAttr: 'L1',
+            permissions: ['test@bla.com'],
+        });
+        await dao.createLanding({
+            someAttr: 'L2',
+            permissions: ['othertest@bla.com'],
+        });
+        const lanes = await dao.getAllLandings();
+        expect(lanes.length).toBe(2);
+        expect(lanes[0].someAttr.substring(0, 1)).toBe('L');
+        expect(lanes[1].someAttr.substring(0, 1)).toBe('L');
+    });
+
     it('logs limited use also repeated', async () => {
         await dao.logLimitedUse('0815', 'testres', 'opt1');
         const resResCount1 = db.prepare('select count(*) as cnt from limitedUse').get().cnt;

@@ -48,7 +48,7 @@ const sessionMiddleware = expressSession({
     secret: process.env.SESSION_SECRET || 'keyboard cat',
     resave: true,
     saveUninitialized: false,
-    store: new ExpressSessionMemoryStore({checkPeriod: 60 * 60 * 1000}), // (can also of course use redis, etc.)
+    store: new ExpressSessionMemoryStore({checkPeriod: 60 * 60 * 1000}), // (can also of course use redis, dynamodb, etc.)
 });
 app.use((req, res, next) => req.headers.authorization?.startsWith('Bearer ') ? next() : sessionMiddleware(req, res, next));
 // passport with yaml as user & apikey repo

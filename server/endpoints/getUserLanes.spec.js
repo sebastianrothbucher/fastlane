@@ -7,7 +7,6 @@ describe('getUserLanes', () => {
     beforeEach(() => {
         req = {
             user: 'test@bla.com',
-            path: 'getLanes',
         };
         res = {
             status: jest.fn(),

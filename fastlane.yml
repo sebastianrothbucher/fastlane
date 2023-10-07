@@ -115,7 +115,7 @@ lanes:
     permissions:
       - sebastianrothbucher@googlemail.com
 landings: 
-  tm200sro:
+  - id: tm200sro
     template: topmixer200
     links:
       - link: http://localhost:8080/mocks/gettingstarted-sro.pdf

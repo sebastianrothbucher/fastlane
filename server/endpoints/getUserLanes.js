@@ -7,6 +7,7 @@ module.exports = async function(req, res, dao, repo) {  // just name and a littl
         ok: true,
         lanes: userLanes.map(l => ({
             id: l.id, 
+            version: l.version, 
             title: l.title, 
             phase: l.phase,
             typeName: l.typeName, 

@@ -18,8 +18,11 @@ const repo = require('./repo/repo');
 const getAvailableDefs = require('./endpoints/getAvailableDefs');
 const createFreestyleLane = require('./endpoints/createFreestyleLane');
 const createLaneFromDef = require('./endpoints/createLaneFromDef');
+const createLanding = require('./endpoints/createLanding');
 const getAllLanes = require('./endpoints/getAllLanes');
+const getAllLandings = require('./endpoints/getAllLandings');
 const getUserLanes = require('./endpoints/getUserLanes');
+const getUserLandings = require('./endpoints/getUserLandings');
 const getLaneData = require('./endpoints/getLaneData');
 const getLimitedSlots = require('./endpoints/getLimitedSlots');
 const saveDraftAnswers = require('./endpoints/saveDraftAnswers');
@@ -97,13 +100,16 @@ app.get('/api/me', (req, res) => res.json({user: req.user}));
 app.get('/api/defs', (req, res) => getAvailableDefs(req, res, dao, repo));
 app.post('/api/createFreestyleLane', (req, res) => createFreestyleLane(req, res, dao, repo));
 app.post('/api/createLaneFromDef', (req, res) => createLaneFromDef(req, res, dao, repo));
+app.post('/api/createLanding', (req, res) => createLanding(req, res, dao, repo));
 app.get('/api/lanes', (req, res) => getAllLanes(req, res, dao, repo));
+app.get('/api/landings', (req, res) => getAllLandings(req, res, dao, repo));
 app.get('/api/userlanes', (req, res) => getUserLanes(req, res, dao, repo));
+app.get('/api/userlandings', (req, res) => getUserLandings(req, res, dao, repo));
 app.get('/api/lane/:id', (req, res) => getLaneData(req, res, dao, repo));
 app.get('/api/limited/:id', (req, res) => getLimitedSlots(req, res, dao, repo));
 app.post('/api/save/:id', (req, res) => saveDraftAnswers(req, res, dao, repo));
 app.post('/api/submit/:id', (req, res) => submitLane(req, res, dao, repo));
-// (and statically serve the UI)
+// (and statically serve the UI - 404 for all we don't have)
 app.use(express.static('../client/', {fallthrough: false, index: ['index.html'], maxAge: 0}));
 
 const port = process.env.PORT || 8080;

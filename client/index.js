@@ -19,6 +19,8 @@ const app = new Vue({
     store,
     data: () => ({
         existLanes: [],
+        landings: [],
+        landing: null,
     }),
     computed: {
         lanes() {
@@ -42,11 +44,10 @@ const app = new Vue({
     },
     methods: {
         async loadLane(lane) {
-            //const laneFull = await fetch('/lanes/' + lane.file).then(res => res.json()); 
             const laneFull = (await fetch('/api/createLaneFromDef?typeName=' + encodeURIComponent(lane.typeName) + '&forUsers=' + encodeURIComponent(this.$store.state.user), {method: 'POST'}).then(res => res.json())).lane; 
             await Promise.all((laneFull.questions || []).filter(q => !!q.limited).map(async q => { // check limited resources (if we give optons here, give the intersection)
-                const limitedOptions = await fetch('/limited/' + q.limited).then(res => res.json());
-                const availableOptions = limitedOptions.filter(lo => (!q.options) || (!!q.options.find(o => o.id === lo.id)));
+                const limitedOptions = await fetch('/api/limited/' + q.limited).then(res => res.json());
+                const availableOptions = limitedOptions.options.filter(lo => (!q.options) || (!!q.options.find(o => o.id === lo.id)));
                 q.options = availableOptions;
             }));
             this.$store.state.lane = { // shortcut, I know ;-)
@@ -65,8 +66,8 @@ const app = new Vue({
             const laneFull = (await fetch('/api/lane/' + encodeURIComponent(laneId)).then(res => res.json())).lane; 
             if ('q' === laneFull.phase) {
                 await Promise.all((laneFull.questions || []).filter(q => !!q.limited).map(async q => { // check limited resources (if we give optons here, give the intersection)
-                    const limitedOptions = await fetch('/limited/' + q.limited).then(res => res.json());
-                    const availableOptions = limitedOptions.filter(lo => (!q.options) || (!!q.options.find(o => o.id === lo.id)));
+                    const limitedOptions = await fetch('/api/limited/' + q.limited).then(res => res.json());
+                    const availableOptions = limitedOptions.options.filter(lo => (!q.options) || (!!q.options.find(o => o.id === lo.id)));
                     q.options = availableOptions;
                 }));
             }
@@ -91,7 +92,22 @@ const app = new Vue({
         submitPreflight () {
             this.$store.dispatch('startProcess');
         },
-        closeLane () {
+        openLandingLink(link) {
+            if (link.link) {
+                window.open(link.link);
+            } else if (link.laneId) { // existing lane
+                this.landing = null;
+                this.openExistLane(link.laneId)
+            } else if (link.lane) { // start new
+                this.landing = null;
+                this.loadLane({typeName: link.lane});
+            } // else nth
+        },
+        closeLaneOrLanding () {
+            if (this.landing) {
+                this.landing = null;
+                return;
+            }
             if (!this.$store.state.lane) {
                 return;
             }
@@ -113,8 +129,8 @@ const app = new Vue({
         }
         // (now pull data for initial screen)
         try {
-            //this.$store.state.lanes = await fetch('/lanes/index.json').then(res => res.json()); // shortcut, I know ;-)
             this.$store.state.lanes = (await fetch('/api/defs').then(res => res.json())).lanes; // shortcut, I know ;-)
+            this.landings = (await fetch('/api/userlandings').then(res => res.json())).landings;
         } catch (err) {
             alert(err.message || err);
         }

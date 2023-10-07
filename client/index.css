@@ -40,27 +40,31 @@
     right: -5px;
 }
 
-.lanes, .login, .questions, .preflight, .processing {
+.lanes, .login, .landing, .questions, .preflight, .processing {
     position: absolute;
     top: 45vh;
     left: 50vw;
     transform: translate(-50%, -50%); /* centered */
 }
-.lanes {
+.lanes,
+.landing {
     text-align: center;
 }
-.lanes button {
+.lanes button,
+.landing button {
     margin-bottom: 16px; 
     min-width: 30vw;
 }
 
-.login, .questions, .preflight {
+.login, .landing, .questions, .preflight {
     width: 400px;
     max-width: 100%;
 }
+.landing > h2,
 .questions > h2 {
     margin-bottom: 40px;
 }
+.landing > h2 + p,
 .questions > h2 + p {
     margin-top: -30px;
     margin-bottom: 40px;

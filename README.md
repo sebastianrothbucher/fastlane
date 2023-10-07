@@ -68,3 +68,14 @@ Pro-actively engage one or two people
 
 Use the API (`POST /api/createFreestyleLane?forUsers=email1@domain1,email2@domain2`) to submit a full definition. 
 
+### Link lists
+
+You can also define simple, but *personalized* link lists for people individually
+
+<img src="utils/screens/screen6.png" width="540" />
+
+which results in 
+
+<img src="utils/screens/screen7.png" width="490" />
+
+(can also use the API to add landings for users)

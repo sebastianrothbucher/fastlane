@@ -1,5 +1,9 @@
 httpVueLoader.register(Vue, 'components/questions.vue');
 httpVueLoader.register(Vue, 'components/answer.vue');
+const graphqlClient = new urql.Client({
+    exchanges: [urql.fetchExchange],
+    url: 'http://localhost:8081/graphql'
+});
 const vuexLocal = new VuexPersistence.VuexPersistence({
     key: 'fastlane',
     storage: window.localStorage,
@@ -119,14 +123,28 @@ const app = new Vue({
     },
     async mounted() {
         // check if we're logged in and redirect if not
-        const meCallRes = await fetch('/api/me');
+
+        /*const meCallRes = await fetch('/api/me');
         if (401 === meCallRes.status) {
             location.href="/login.html";
             return;
         } else if ((meCallRes.status - (meCallRes.status % 100)) !== 200) {
             alert('Error ' + meCallRes.status);
             return;
-        }
+        }*/
+
+        const usersMe = urql.gql`query {
+            users {
+              me {
+                email
+              }
+            }
+          }`
+        const userInfo = await graphqlClient.query(usersMe);
+        debugger;
+        console.log(userInfo);
+        // TODO: login with the GQL API as well
+
         // (now pull data for initial screen)
         try {
             this.$store.state.lanes = (await fetch('/api/defs').then(res => res.json())).lanes; // shortcut, I know ;-)

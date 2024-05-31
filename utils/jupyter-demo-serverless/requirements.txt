@@ -1,5 +1,7 @@
 ipython==8.12.3
 matplotlib==3.9.0
+nbconvert==7.16.4
+notebook==7.2.0
 num2words==0.5.13
 numpy==1.26.4
 pandas==2.2.2

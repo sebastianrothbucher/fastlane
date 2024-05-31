@@ -1,0 +1,4 @@
+- create Docker container
+- call container in Fargate with env + tgt file name
+- invoke `jupyter nbconvert` just like in "normal" ex
+- save result to tgt file name on S3
